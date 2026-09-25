@@ -37,7 +37,7 @@ class GUI {
 
             sf::Uint8 r, g, b;
             densityToColor(t, r, g,
-                           b);  // stessa funzione blu->verde->rosso di prima
+                           b);  // stessa funzione blu->verde->rosso 
             pixels[i * 4 + 0] = r;
             pixels[i * 4 + 1] = g;
             pixels[i * 4 + 2] = b;
