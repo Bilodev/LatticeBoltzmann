@@ -6,5 +6,5 @@
 
 - Headless
 - Validation
-- MUILPS Benchmarking
+- MUILPS Benchmarking and Data plotting
 - Run on Personal Nvidia GPU
