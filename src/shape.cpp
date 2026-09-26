@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 //
-#include "options.hpp"
+#include "utils/options.hpp"
 #include "shape.hpp"
 
 Circle::Circle(double r) : radius(r)

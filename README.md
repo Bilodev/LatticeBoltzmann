@@ -4,7 +4,10 @@
 
 ## Working on...
 
-- Headless
 - Validation
-- MUILPS Benchmarking and Data plotting
+- Benchmark data plotting
 - Run on Personal Nvidia GPU
+
+### OpenMP Bench
+
+![omp](OMPBench.png)
