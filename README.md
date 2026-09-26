@@ -10,4 +10,4 @@
 
 ### OpenMP Bench
 
-![omp](OMPBench.png)
+![omp](img/OMPBench.png)
