@@ -1,9 +1,10 @@
 #include <iostream>
 //
 #include "bench/bench.cpp"
+#include "bench/validation.cpp"
 #include "view/view.cpp"
 
-enum MODES { STD, HEADLESS };
+enum MODES { STD, HEADLESS, VALIDATE };
 
 int main(int argc, char** argv)
 {
@@ -16,8 +17,16 @@ int main(int argc, char** argv)
         std::string arg = argv[i];
         if (arg == "--headless")
             mode = HEADLESS;
+        else if (arg == "--validate")
+            mode = VALIDATE;
         else if (arg == "--steps" && i + 1 < argc)
             nSteps = std::atoi(argv[++i]);
+    }
+
+    if (mode == VALIDATE) {
+        options::Nx = 100;
+        options::Ny = 50;
+        options::tau = 0.75;
     }
 
     // SYCL INIT
@@ -50,22 +59,37 @@ int main(int argc, char** argv)
 
     // SHAPE INIT
     std::vector<uint8_t> solid(options::Nx * options::Ny, 0);
+    if (mode == VALIDATE) {
+        for (int x = 0; x < options::Nx; ++x) {
+            solid[0 * options::Nx + x] = 1;
+            solid[(options::Ny - 1) * options::Nx + x] = 1;
+        }
+    }
+
     Circle c(20);
     Shape* shape = &c;
-    shape->createMask(solid);
+    if (mode != VALIDATE) shape->createMask(solid);
 
     uint8_t* solidPtr =
         sycl::malloc_shared<uint8_t>(options::Nx * options::Ny, q);
     std::copy(solid.begin(), solid.end(), solidPtr);
 
     // RUN
-    if (mode == HEADLESS) {
-        runHeadless(q, f, f_new, rho, ux, uy, solidPtr, options::Nx,
-                    options::Ny, options::tau, options::U0, nSteps);
-    }
-    else {
-        loop(q, f, f_new, rho, ux, uy, solidPtr, shape, options::Nx,
-             options::Ny, options::tau, options::U0);
+    float Fx = 3.33e-7f;  // o calcolato da options
+    switch (mode) {
+        case HEADLESS:
+            runHeadless(q, f, f_new, rho, ux, uy, solidPtr, options::Nx,
+                        options::Ny, options::tau, options::U0, nSteps, false);
+            break;
+        case VALIDATE:
+            runPoiseuilleForced(q, f, f_new, rho, ux, uy, solidPtr, options::Nx,
+                                options::Ny, options::tau, Fx, nSteps);
+            poiseuille(ux);
+            break;
+        case STD:
+            loop(q, f, f_new, rho, ux, uy, solidPtr, shape, options::Nx,
+                 options::Ny, options::tau, options::U0);
+            break;
     }
 
     // CLEANUP
