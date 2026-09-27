@@ -8,7 +8,7 @@
 
 The Poiseuille-test is one of the most used benchmarks to validate a CFD/LBM simulation, because it's one of the rare cases where the Navier-Stokes equations have an analytical solution.
 
-![poiseuille](poiseuille.png)
+![poiseuille](img/poiseuille.png)
 
 ## Working on...
 
@@ -17,4 +17,4 @@ The Poiseuille-test is one of the most used benchmarks to validate a CFD/LBM sim
 
 ### OpenMP Bench
 
-![omp](OMPBench.png)
+![omp](img/OMPBench.png)
