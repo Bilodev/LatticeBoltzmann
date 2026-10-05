@@ -31,7 +31,7 @@ void runHeadless(sycl::queue& q, float* f, float* f_new, float* rho, float* ux,
 
     std::cout << "Steps: " << nSteps << "\n";
     std::cout << "Time: " << seconds << " s\n";
-    std::cout << "MLUPS: " << mlups << "\n";
+    std::cout << "MLUPS: " << mlups << "\n\n";
 }
 
 void runPoiseuilleForced(sycl::queue& q, float* f, float* f_new, float* rho,
@@ -54,5 +54,5 @@ void runPoiseuilleForced(sycl::queue& q, float* f, float* f_new, float* rho,
 
     std::cout << "Steps: " << nSteps << "\n";
     std::cout << "Time: " << seconds << " s\n";
-    std::cout << "MLUPS: " << mlups << "\n";
+    std::cout << "MLUPS: " << mlups << "\n\n";  
 }

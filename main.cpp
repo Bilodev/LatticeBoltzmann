@@ -31,9 +31,9 @@ int main(int argc, char** argv)
 
     // SYCL INIT
     sycl::queue q{sycl::default_selector_v};
-    std::cout << "Device: "
-              << q.get_device().get_info<sycl::info::device::name>()
-              << std::endl;
+    // std::cout << "Device: "
+    //           << q.get_device().get_info<sycl::info::device::name>()
+    //           << std::endl;
 
     float* f =
         sycl::malloc_shared<float>(options::Nx * options::Ny * lbm::Q, q);
